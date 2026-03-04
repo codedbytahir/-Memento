@@ -1,0 +1,47 @@
+{
+  "name": "memento",
+  "version": "2.0.0",
+  "private": true,
+  "description": "AI-powered biographer that preserves your memories",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "test": "echo 'No tests configured yet'"
+  },
+  "dependencies": {
+    "next": "14.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.490.0",
+    "@aws-sdk/client-dynamodb": "^3.490.0",
+    "@aws-sdk/client-s3": "^3.490.0",
+    "@aws-sdk/client-ses": "^3.490.0",
+    "@aws-sdk/client-sqs": "^3.490.0",
+    "@aws-sdk/lib-dynamodb": "^3.490.0",
+    "@aws-sdk/s3-request-presigner": "^3.490.0",
+    "zustand": "^4.5.0",
+    "zod": "^3.22.4",
+    "uuid": "^9.0.1",
+    "lucide-react": "^0.316.0",
+    "framer-motion": "^11.0.3",
+    "react-dropzone": "^14.2.3",
+    "browser-image-compression": "^2.0.2",
+    "jspdf": "^2.5.1",
+    "html2canvas": "^1.4.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.5",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "@types/uuid": "^9.0.7",
+    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.33",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "14.1.0"
+  }
+}

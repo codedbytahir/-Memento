@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #1F3864;
+  --navy-light: #2E4B7F;
+  --navy-dark: #152849;
+  --copper: #D4A574;
+  --copper-light: #E5C09E;
+  --copper-dark: #B88F5F;
+  --charcoal: #2C2C2C;
+  --charcoal-light: #595959;
+  --cream: #FAF9F6;
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--charcoal);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.01em;
+}
+
+h1, h2, h3, h4, h5, h6, .serif {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: var(--navy);
+}
+
+.tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.5); }
+}
+
+@keyframes bookOpen {
+  0% { transform: rotateY(-90deg); }
+  100% { transform: rotateY(0deg); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.animate-wave {
+  animation: wave 1.5s ease-in-out infinite;
+}
+
+.animate-book-open {
+  animation: bookOpen 0.6s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
