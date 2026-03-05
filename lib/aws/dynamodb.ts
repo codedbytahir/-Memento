@@ -8,7 +8,7 @@ export async function createSession(sessionId: string, email: string): Promise<v
   const command = new PutCommand({
     TableName: RESOURCE_NAMES.SESSIONS_TABLE,
     Item: {
-      sessionId,
+      id: sessionId, // Updated to match your manual table's Partition Key
       email,
       status: 'started',
       createdAt: new Date().toISOString(),
@@ -23,7 +23,7 @@ export async function createSession(sessionId: string, email: string): Promise<v
 export async function getSession(sessionId: string): Promise<Session | null> {
   const command = new GetCommand({
     TableName: RESOURCE_NAMES.SESSIONS_TABLE,
-    Key: { sessionId },
+    Key: { id: sessionId }, // Updated to match your manual table's Partition Key
   });
 
   const { Item } = await docClient.send(command);
@@ -33,7 +33,7 @@ export async function getSession(sessionId: string): Promise<Session | null> {
 export async function updateSessionTranscript(sessionId: string, transcript: string[]): Promise<void> {
   const command = new UpdateCommand({
     TableName: RESOURCE_NAMES.SESSIONS_TABLE,
-    Key: { sessionId },
+    Key: { id: sessionId }, // Updated to match your manual table's Partition Key
     UpdateExpression: 'SET transcript = :transcript',
     ExpressionAttributeValues: {
       ':transcript': transcript,
@@ -59,7 +59,7 @@ export async function updateSessionStatus(
 
   const command = new UpdateCommand({
     TableName: RESOURCE_NAMES.SESSIONS_TABLE,
-    Key: { sessionId },
+    Key: { id: sessionId }, // Updated to match your manual table's Partition Key
     UpdateExpression: updateExpression,
     ExpressionAttributeNames: expressionAttributeNames,
     ExpressionAttributeValues: expressionAttributeValues,
