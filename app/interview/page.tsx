@@ -286,7 +286,7 @@ export default function InterviewPage() {
                 Finish My Story
               </Button>
               <p className="text-xs text-center text-charcoal-light">
-                Click &quot;Finish My Story&quot; when you&apos;re ready to create your biography.
+                Click Finish My Story when you're ready to create your biography.
               </p>
             </div>
           </div>
