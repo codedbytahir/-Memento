@@ -1,5 +1,5 @@
 export interface Session {
-  sessionId: string;
+  id: string;
   email: string;
   status: 'started' | 'processing' | 'completed' | 'failed';
   createdAt: string;

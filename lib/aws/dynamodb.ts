@@ -3,7 +3,8 @@ import { docClient, RESOURCE_NAMES } from './config';
 import { Session } from '@/types/session';
 
 export async function createSession(sessionId: string, email: string): Promise<void> {
-  const ttl = Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60); // 7 days
+  try {
+    const ttl = Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60); // 7 days
 
   const command = new PutCommand({
     TableName: RESOURCE_NAMES.SESSIONS_TABLE,
@@ -17,7 +18,12 @@ export async function createSession(sessionId: string, email: string): Promise<v
     },
   });
 
-  await docClient.send(command);
+    await docClient.send(command);
+    console.log(`[DynamoDB] Created session: ${sessionId}`);
+  } catch (error) {
+    console.error(`[DynamoDB Error] Failed to create session ${sessionId}:`, error);
+    throw error;
+  }
 }
 
 export async function getSession(sessionId: string): Promise<Session | null> {
