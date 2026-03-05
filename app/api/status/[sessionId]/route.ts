@@ -24,7 +24,7 @@ export async function GET(
     }
 
     const response: StatusResponse = {
-      sessionId: session.sessionId,
+      sessionId: session.id,
       status: session.status,
       pdfUrl: session.pdfUrl,
       progress: session.status === 'completed' ? 100 : (session.status === 'processing' ? 65 : 20),

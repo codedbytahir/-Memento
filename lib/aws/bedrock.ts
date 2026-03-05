@@ -36,13 +36,15 @@ Edited biography:`;
       }),
     };
 
+    console.log('[Bedrock] Calling Nova Lite for biography processing...');
     const command = new InvokeModelCommand(input);
     const response = await bedrockClient.send(command);
     const result = JSON.parse(new TextDecoder().decode(response.body));
+    console.log('[Bedrock] Biography processing complete');
 
     return result.output.message.content[0].text;
   } catch (error) {
-    console.error('Error calling Bedrock Nova Lite:', error);
+    console.error('[Bedrock Error] Failed to process biography with Nova Lite:', error);
     throw new Error('Failed to process biography with AI');
   }
 }
