@@ -2,28 +2,30 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Mic } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
+
+// ✅ FIX: Moved outside component — stable reference, no re-render on every cycle
+const messages = [
+  'Transcribing memories...',
+  'Removing filler words...',
+  'Fixing grammar and syntax...',
+  'Organizing chronologically...',
+  'Structuring into paragraphs...',
+  'Capturing your unique voice...',
+  'Finalizing your biography...',
+];
 
 export const LoadingBook: React.FC = () => {
   const [phase, setPhase] = useState<'wave' | 'transition' | 'book'>('wave');
   const [loadingText, setLoadingText] = useState('Listening to your story...');
 
-  const messages = [
-    'Transcribing memories...',
-    'Removing filler words...',
-    'Fixing grammar and syntax...',
-    'Organizing chronologically...',
-    'Structuring into paragraphs...',
-    'Capturing your unique voice...',
-    'Finalizing your biography...',
-  ];
-
+  // ✅ FIX: `messages` is now a stable module-level constant, safe to include as dep
   useEffect(() => {
     const timer = setTimeout(() => setPhase('transition'), 5000);
     const timer2 = setTimeout(() => setPhase('book'), 6500);
 
     const textInterval = setInterval(() => {
-      setLoadingText(prev => {
+      setLoadingText((prev) => {
         const index = messages.indexOf(prev);
         return messages[(index + 1) % messages.length];
       });
@@ -34,7 +36,7 @@ export const LoadingBook: React.FC = () => {
       clearTimeout(timer2);
       clearInterval(textInterval);
     };
-  }, []);
+  }, []); // ✅ Empty array is now correct — messages is stable outside component
 
   return (
     <div className="flex flex-col items-center justify-center space-y-12 py-12">
@@ -52,14 +54,8 @@ export const LoadingBook: React.FC = () => {
                 <motion.div
                   key={i}
                   className="w-3 rounded-full bg-navy"
-                  animate={{
-                    height: [20, 100, 40, 80, 20],
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    delay: i * 0.1,
-                  }}
+                  animate={{ height: [20, 100, 40, 80, 20] }}
+                  transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.1 }}
                 />
               ))}
             </motion.div>

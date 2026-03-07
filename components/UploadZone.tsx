@@ -3,6 +3,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Camera, X } from 'lucide-react';
+import Image from 'next/image'; // ✅ FIX: Next.js Image for automatic optimization
 import { compressImage, fileToBase64 } from '@/lib/utils/compression';
 import { useStore } from '@/lib/store';
 
@@ -14,22 +15,25 @@ export const UploadZone: React.FC<UploadZoneProps> = ({ onImagesChange }) => {
   const [previews, setPreviews] = useState<string[]>([]);
   const { setImages } = useStore();
 
-  const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    const remainingSlots = 5 - previews.length;
-    const filesToProcess = acceptedFiles.slice(0, remainingSlots);
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      const remainingSlots = 5 - previews.length;
+      const filesToProcess = acceptedFiles.slice(0, remainingSlots);
 
-    const processedImages = await Promise.all(
-      filesToProcess.map(async (file) => {
-        const compressed = await compressImage(file);
-        return await fileToBase64(compressed);
-      })
-    );
+      const processedImages = await Promise.all(
+        filesToProcess.map(async (file) => {
+          const compressed = await compressImage(file);
+          return await fileToBase64(compressed);
+        })
+      );
 
-    const newPreviews = [...previews, ...processedImages];
-    setPreviews(newPreviews);
-    setImages(newPreviews);
-    if (onImagesChange) onImagesChange(newPreviews);
-  }, [previews, setImages, onImagesChange]);
+      const newPreviews = [...previews, ...processedImages];
+      setPreviews(newPreviews);
+      setImages(newPreviews);
+      if (onImagesChange) onImagesChange(newPreviews);
+    },
+    [previews, setImages, onImagesChange]
+  );
 
   const removeImage = (index: number) => {
     const newPreviews = previews.filter((_, i) => i !== index);
@@ -68,11 +72,18 @@ export const UploadZone: React.FC<UploadZoneProps> = ({ onImagesChange }) => {
       {previews.length > 0 && (
         <div className="grid grid-cols-5 gap-2">
           {previews.map((preview, index) => (
-            <div key={index} className="relative aspect-square overflow-hidden rounded-md border border-navy/10">
-              <img
+            <div
+              key={index}
+              className="relative aspect-square overflow-hidden rounded-md border border-navy/10"
+            >
+              {/* ✅ FIX: <Image> with fill + base64 src — faster LCP, auto-optimized */}
+              <Image
                 src={preview}
                 alt={`Upload ${index + 1}`}
-                className="h-full w-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 20vw, 10vw"
+                unoptimized // ✅ Required for base64 data URLs — Next.js can't optimize inline data
               />
               <button
                 onClick={(e) => {

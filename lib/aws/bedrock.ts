@@ -1,10 +1,12 @@
-import { InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
+import { ConverseCommand } from '@aws-sdk/client-bedrock-runtime';
 import { bedrockClient, MODEL_IDS } from './config';
 
 export async function processBiography(transcript: string): Promise<string> {
   if (process.env.NEXT_PUBLIC_DEV_MODE === 'true') {
     return mockProcessedBiography(transcript);
   }
+
+  const MODEL_ID = 'eu.amazon.nova-lite-v1:0';
 
   const prompt = `You are a professional biographer. Given this raw interview transcript, remove filler words, fix grammar, organize chronologically, and structure into 3-5 well-formed paragraphs. Maintain the speaker's original voice and tone. Return only the edited prose, no preamble or commentary.
 
@@ -13,36 +15,30 @@ Transcript: ${transcript}
 Edited biography:`;
 
   try {
-    const input = {
-      modelId: MODEL_IDS.NOVA_LITE,
-      contentType: 'application/json',
-      accept: 'application/json',
-      body: JSON.stringify({
-        inferenceConfig: {
-          max_new_tokens: 2000,
-          temperature: 0.7,
-          top_p: 0.9,
-        },
-        messages: [
-          {
-            role: 'user',
-            content: [
-              {
-                text: prompt,
-              },
-            ],
-          },
-        ],
-      }),
-    };
-
     console.log('[Bedrock] Calling Nova Lite for biography processing...');
-    const command = new InvokeModelCommand(input);
+
+    const command = new ConverseCommand({
+      modelId: MODEL_ID,
+      inferenceConfig: {
+        maxTokens: 2000,
+        temperature: 0.7,
+        topP: 0.9,
+      },
+      messages: [
+        {
+          role: 'user',
+          content: [{ text: prompt }],
+        },
+      ],
+    });
+
     const response = await bedrockClient.send(command);
-    const result = JSON.parse(new TextDecoder().decode(response.body));
     console.log('[Bedrock] Biography processing complete');
 
-    return result.output.message.content[0].text;
+    const text = response.output?.message?.content?.[0]?.text;
+    if (!text) throw new Error('Empty response from model');
+
+    return text;
   } catch (error) {
     console.error('[Bedrock Error] Failed to process biography with Nova Lite:', error);
     throw new Error('Failed to process biography with AI');
@@ -50,7 +46,6 @@ Edited biography:`;
 }
 
 async function mockProcessedBiography(transcript: string): Promise<string> {
-  // Simulate network delay
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return `This is a beautiful memory preserved from your interview. You shared stories about your experiences, captured here for generations to come.
