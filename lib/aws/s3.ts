@@ -1,3 +1,7 @@
+/**
+ * Utility functions for managing file uploads and retrievals from Amazon S3.
+ * It handles the storage of user-uploaded images and generated biography PDFs, as well as generating pre-signed URLs for access.
+ */
 import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { s3Client, RESOURCE_NAMES } from './config';
@@ -15,7 +19,6 @@ export async function uploadImage(sessionId: string, index: number, imageBase64:
     });
 
     await s3Client.send(command);
-    console.log(`[S3] Successfully uploaded image ${index} for session ${sessionId}`);
     return key;
   } catch (error) {
     console.error(`[S3 Error] Failed to upload image ${index} for session ${sessionId}:`, error);
@@ -36,7 +39,6 @@ export async function uploadPDF(sessionId: string, pdfBlob: Blob): Promise<strin
     });
 
     await s3Client.send(command);
-    console.log(`[S3] Successfully uploaded PDF for session ${sessionId}`);
     return key;
   } catch (error) {
     console.error(`[S3 Error] Failed to upload PDF for session ${sessionId}:`, error);
@@ -50,5 +52,5 @@ export async function getPresignedUrl(key: string, bucket: string = RESOURCE_NAM
     Key: key,
   });
 
-  return await getSignedUrl(s3Client, command, { expiresIn: 3600 * 24 }); // 24 hours
+  return await getSignedUrl(s3Client, command, { expiresIn: 3600 * 24 });
 }

@@ -1,3 +1,7 @@
+/**
+ * API route that orchestrates the post-interview biography generation process.
+ * It handles transcript processing, PDF generation, storage, and session status updates.
+ */
 import { NextRequest, NextResponse } from 'next/server';
 import { processBiography } from '@/lib/aws/bedrock';
 import { updateSessionStatus } from '@/lib/aws/dynamodb';
@@ -11,7 +15,6 @@ export async function POST(req: NextRequest) {
   try {
     body = await req.json();
 
-    // Validate input
     const validationResult = processSchema.safeParse(body);
     if (!validationResult.success) {
       return NextResponse.json({ error: validationResult.error.errors[0].message }, { status: 400 });
@@ -26,17 +29,14 @@ export async function POST(req: NextRequest) {
         });
     }
 
-    // Update status to processing
     await updateSessionStatus(sessionId, 'processing');
 
-    // Process biography with Bedrock (Nova Lite)
     const editedStory = await processBiography(transcript);
 
     const pdfBlob = await generateBiographyPDF(editedStory);
     const pdfKey = await uploadPDF(sessionId, pdfBlob);
     const pdfUrl = await getPresignedUrl(pdfKey);
 
-    // Update status to completed
     await updateSessionStatus(sessionId, 'completed', {
       editedStory,
       pdfUrl,

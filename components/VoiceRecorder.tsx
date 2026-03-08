@@ -1,3 +1,7 @@
+/**
+ * Voice recording component utilizing the Web Speech API for real-time transcription.
+ * It allows users to dictate their memories, displaying live feedback and managing the recording state.
+ */
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -15,7 +19,6 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onTranscriptComple
   const recognitionRef = useRef<any>(null);
 
   useEffect(() => {
-    // Check for browser support
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (SpeechRecognition) {
       recognitionRef.current = new SpeechRecognition();

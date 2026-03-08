@@ -1,3 +1,7 @@
+/**
+ * Input validation schemas defined using the Zod library.
+ * It enforces data integrity for session initialization, transcript processing, and email requests across API endpoints.
+ */
 import { z } from 'zod';
 
 export const sessionSchema = z.object({

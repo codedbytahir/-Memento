@@ -1,3 +1,7 @@
+/**
+ * Landing page of the Memento application where users begin their journey.
+ * It features an image upload zone and email collection form to initialize a new biography session.
+ */
 'use client';
 
 import React, { useState } from 'react';

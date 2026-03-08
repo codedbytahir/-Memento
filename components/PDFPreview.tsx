@@ -1,3 +1,7 @@
+/**
+ * UI component for previewing the generated biography PDF within the browser.
+ * It includes action buttons for downloading the document and triggering the email delivery service.
+ */
 'use client';
 
 import React from 'react';

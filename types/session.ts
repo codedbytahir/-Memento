@@ -1,3 +1,7 @@
+/**
+ * Comprehensive type definitions for biography sessions and related data models.
+ * It defines the core Session interface along with specialized request and response types for session management.
+ */
 export interface Session {
   id: string;
   email: string;

@@ -1,3 +1,7 @@
+/**
+ * Main interview interface component where users interact with the AI biographer.
+ * It manages real-time chat, photo display, voice-to-text input, and orchestrates the transition to story processing.
+ */
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
@@ -19,7 +23,6 @@ export default function InterviewPage() {
   const [chatHistory, setChatHistory] = useState<{ role: 'user' | 'ai'; text: string }[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // ✅ FIX: Use ref to prevent double-firing on mount (avoids chatHistory.length as dep)
   const hasInitialized = useRef(false);
 
   const playTTS = useCallback(async (text: string) => {
@@ -46,7 +49,6 @@ export default function InterviewPage() {
     }
   }, []);
 
-  // ✅ FIX: Wrapped in useCallback so it can be a stable dep for useEffect
   const getNextQuestion = useCallback(
     async (updatedTranscript?: string[]) => {
       setIsAiThinking(true);
@@ -72,7 +74,6 @@ export default function InterviewPage() {
     [transcript, images, currentImageIndex, playTTS]
   );
 
-  // ✅ FIX: All deps included; hasInitialized ref prevents the infinite loop
   useEffect(() => {
     if (!sessionId) {
       router.push('/');
@@ -84,7 +85,6 @@ export default function InterviewPage() {
     }
   }, [sessionId, getNextQuestion, router]);
 
-  // ✅ FIX: chatHistory is a valid dep here — scroll on every chat update
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -150,7 +150,6 @@ export default function InterviewPage() {
             </div>
             <div>
               <h1 className="font-serif text-2xl font-bold text-navy">Memento Biographer</h1>
-              {/* ✅ FIX: Apostrophe properly escaped with &apos; */}
               <p className="text-xs text-charcoal-light">
                 Preserving your legacy, one memory at a time.
               </p>
@@ -167,7 +166,6 @@ export default function InterviewPage() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column: Photo & Controls */}
           <div className="lg:col-span-5 space-y-6">
             <Card className="overflow-hidden p-0 border-2 border-navy/5 shadow-xl rounded-2xl">
               <div className="relative aspect-[4/3] bg-navy/5">
@@ -198,7 +196,6 @@ export default function InterviewPage() {
             />
           </div>
 
-          {/* Right Column: Chat Interface */}
           <div className="lg:col-span-7 space-y-6">
             <Card className="flex flex-col h-[550px] border-2 border-navy/5 shadow-xl bg-white rounded-2xl overflow-hidden">
               <div
@@ -296,7 +293,6 @@ export default function InterviewPage() {
                     disabled={transcript.length < 2 || isFinishing}
                     className="text-[10px] font-bold text-copper hover:underline disabled:opacity-30"
                   >
-                    {/* ✅ FIX: Apostrophe escaped */}
                     Ready to compile biography?
                   </button>
                 </div>
@@ -314,7 +310,6 @@ export default function InterviewPage() {
                 <Save className="mr-2 h-6 w-6" />
                 Finish My Story
               </Button>
-              {/* ✅ FIX: &apos; used for the apostrophe in "you're" */}
               <p className="text-xs text-center text-charcoal-light">
                 Click &quot;Finish My Story&quot; when you&apos;re ready to create your biography.
               </p>

@@ -1,9 +1,13 @@
+/**
+ * Interactive image upload component using react-dropzone for handling user photos.
+ * It manages file selection, compression, base64 conversion, and photo preview functionality.
+ */
 'use client';
 
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Camera, X } from 'lucide-react';
-import Image from 'next/image'; // ✅ FIX: Next.js Image for automatic optimization
+import Image from 'next/image';
 import { compressImage, fileToBase64 } from '@/lib/utils/compression';
 import { useStore } from '@/lib/store';
 
@@ -76,14 +80,13 @@ export const UploadZone: React.FC<UploadZoneProps> = ({ onImagesChange }) => {
               key={index}
               className="relative aspect-square overflow-hidden rounded-md border border-navy/10"
             >
-              {/* ✅ FIX: <Image> with fill + base64 src — faster LCP, auto-optimized */}
               <Image
                 src={preview}
                 alt={`Upload ${index + 1}`}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 20vw, 10vw"
-                unoptimized // ✅ Required for base64 data URLs — Next.js can't optimize inline data
+                unoptimized
               />
               <button
                 onClick={(e) => {

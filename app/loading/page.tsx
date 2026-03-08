@@ -1,3 +1,7 @@
+/**
+ * Loading screen that displays progress while the AI biographer processes the interview transcript.
+ * It polls the session status API and redirects the user to the preview page once the biography is complete.
+ */
 'use client';
 
 import React, { useEffect, useState } from 'react';

@@ -1,3 +1,7 @@
+/**
+ * Reusable button component with multiple style variants and sizes.
+ * It includes built-in loading state management and consistent styling using Tailwind CSS.
+ */
 import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

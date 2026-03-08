@@ -1,4 +1,7 @@
-/** @type {import('tailwindcss').Config} */
+/**
+ * Tailwind CSS configuration defining the application's design system and theme.
+ * It specifies custom color palettes, typography, and unique animations for the Memento brand.
+ */
 module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
@@ -7,24 +10,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Primary - Navy (from logo sound wave)
         'navy': {
           DEFAULT: '#1F3864',
           light: '#2E4B7F',
           dark: '#152849',
         },
-        // Accent - Copper/Gold (from logo book)
         'copper': {
           DEFAULT: '#D4A574',
           light: '#E5C09E',
           dark: '#B88F5F',
         },
-        // Text
         'charcoal': {
           DEFAULT: '#2C2C2C',
           light: '#595959',
         },
-        // Backgrounds
         'cream': '#FAF9F6',
       },
       fontFamily: {

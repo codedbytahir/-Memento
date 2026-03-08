@@ -1,3 +1,7 @@
+/**
+ * Email delivery service integration using Amazon SES for sending completed biographies.
+ * It constructs and sends raw multipart emails containing the generated biography PDF as an attachment to the user.
+ */
 import { SendRawEmailCommand } from '@aws-sdk/client-ses';
 import { sesClient, RESOURCE_NAMES } from './config';
 

@@ -1,3 +1,7 @@
+/**
+ * Utility functions for interacting with AWS Bedrock to process interview transcripts.
+ * It uses the Nova Lite model to transform raw transcripts into polished, structured biographies.
+ */
 import { ConverseCommand } from '@aws-sdk/client-bedrock-runtime';
 import { bedrockClient, MODEL_IDS } from './config';
 
@@ -15,8 +19,6 @@ Transcript: ${transcript}
 Edited biography:`;
 
   try {
-    console.log('[Bedrock] Calling Nova Lite for biography processing...');
-
     const command = new ConverseCommand({
       modelId: MODEL_ID,
       inferenceConfig: {
@@ -33,7 +35,6 @@ Edited biography:`;
     });
 
     const response = await bedrockClient.send(command);
-    console.log('[Bedrock] Biography processing complete');
 
     const text = response.output?.message?.content?.[0]?.text;
     if (!text) throw new Error('Empty response from model');

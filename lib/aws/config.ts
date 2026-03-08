@@ -1,3 +1,7 @@
+/**
+ * Centralized configuration for AWS SDK clients used throughout the application.
+ * It initializes Bedrock, DynamoDB, S3, and SES clients with region and credential settings from environment variables.
+ */
 import { BedrockRuntimeClient } from '@aws-sdk/client-bedrock-runtime';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';

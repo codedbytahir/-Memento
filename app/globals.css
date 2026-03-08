@@ -1,3 +1,7 @@
+/**
+ * Global stylesheet containing Tailwind CSS directives and custom color variables.
+ * It defines the application's visual theme, typography, and core animations like the wave and book-open effects.
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

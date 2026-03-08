@@ -1,3 +1,7 @@
+/**
+ * Standardized text input component with support for labels and error messaging.
+ * It ensures consistent form styling and accessibility throughout the application.
+ */
 import React from 'react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {

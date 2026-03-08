@@ -1,10 +1,13 @@
+/**
+ * Animated loading component that visualizes the biography creation process.
+ * It cycles through different animation phases representing transcription, grammar fixing, and final book structuring.
+ */
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen } from 'lucide-react';
 
-// ✅ FIX: Moved outside component — stable reference, no re-render on every cycle
 const messages = [
   'Transcribing memories...',
   'Removing filler words...',
@@ -19,7 +22,6 @@ export const LoadingBook: React.FC = () => {
   const [phase, setPhase] = useState<'wave' | 'transition' | 'book'>('wave');
   const [loadingText, setLoadingText] = useState('Listening to your story...');
 
-  // ✅ FIX: `messages` is now a stable module-level constant, safe to include as dep
   useEffect(() => {
     const timer = setTimeout(() => setPhase('transition'), 5000);
     const timer2 = setTimeout(() => setPhase('book'), 6500);
@@ -36,7 +38,7 @@ export const LoadingBook: React.FC = () => {
       clearTimeout(timer2);
       clearInterval(textInterval);
     };
-  }, []); // ✅ Empty array is now correct — messages is stable outside component
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center space-y-12 py-12">

@@ -1,3 +1,7 @@
+/**
+ * Global state management for the Memento application using Zustand.
+ * It synchronizes session details, uploaded images, conversation transcripts, and processing status across components.
+ */
 import { create } from 'zustand';
 
 interface MementoState {
@@ -8,7 +12,6 @@ interface MementoState {
   status: 'idle' | 'started' | 'processing' | 'completed' | 'failed';
   pdfUrl: string | null;
 
-  // Actions
   setSession: (sessionId: string, email: string) => void;
   setImages: (images: string[]) => void;
   addTranscriptLine: (line: string) => void;

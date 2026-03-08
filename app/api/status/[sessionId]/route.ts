@@ -1,3 +1,7 @@
+/**
+ * API route for polling the current processing status of a biography session.
+ * It retrieves session state from DynamoDB and calculates progress percentages for the UI.
+ */
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/aws/dynamodb';
 import { StatusResponse } from '@/types/session';

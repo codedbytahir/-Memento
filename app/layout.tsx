@@ -1,3 +1,7 @@
+/**
+ * Root layout component for the Next.js application, providing consistent structure across pages.
+ * It sets up global fonts, metadata, and the core HTML wrapper for the entire application.
+ */
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";

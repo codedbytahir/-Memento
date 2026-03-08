@@ -1,3 +1,7 @@
+/**
+ * Versatile card component for grouping content and providing visual structure.
+ * It supports optional titles, descriptions, and custom styling for consistent UI layouts.
+ */
 import React from 'react';
 
 interface CardProps {

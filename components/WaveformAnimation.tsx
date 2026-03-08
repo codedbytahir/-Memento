@@ -1,3 +1,7 @@
+/**
+ * Visual animation component representing an audio waveform.
+ * It uses Framer Motion to create dynamic, pulsing bars that respond to an active state, providing visual feedback during recording.
+ */
 'use client';
 
 import React from 'react';

@@ -1,3 +1,7 @@
+/**
+ * Core logic for generating biography PDFs using jsPDF.
+ * It handles document styling, content layout, page breaks, and branding elements for the final biography report.
+ */
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -13,22 +17,19 @@ export async function generateBiographyPDF(story: string, images: string[] = [])
   const margin = 20;
   const contentWidth = pageWidth - 2 * margin;
 
-  // Header - Memento Branding
   doc.setFont('georgia', 'bold');
   doc.setFontSize(24);
-  doc.setTextColor(31, 56, 100); // Navy
+  doc.setTextColor(31, 56, 100);
   doc.text('Memento', margin, 30);
 
   doc.setFontSize(10);
-  doc.setTextColor(44, 44, 44); // Charcoal
+  doc.setTextColor(44, 44, 44);
   doc.text('PRESERVE YOUR STORY', margin, 38);
 
-  // Title
   doc.setFontSize(18);
   doc.setTextColor(31, 56, 100);
   doc.text('My Life Story', margin, 55);
 
-  // Body Text
   doc.setFont('times', 'normal');
   doc.setFontSize(12);
   doc.setTextColor(44, 44, 44);
@@ -36,7 +37,6 @@ export async function generateBiographyPDF(story: string, images: string[] = [])
   const splitText = doc.splitTextToSize(story, contentWidth);
   doc.text(splitText, margin, 70);
 
-  // Add images if any
   let yPos = 70 + (splitText.length * 6);
 
   for (const imageUrl of images) {
@@ -46,8 +46,6 @@ export async function generateBiographyPDF(story: string, images: string[] = [])
     }
 
     try {
-        // In a real browser environment, we'd add the image.
-        // For simplicity in this mock, we skip image embedding or use a placeholder.
         doc.rect(margin, yPos, contentWidth, 60);
         doc.text('[Image Placeholder]', margin + 10, yPos + 30);
         yPos += 70;
@@ -56,7 +54,6 @@ export async function generateBiographyPDF(story: string, images: string[] = [])
     }
   }
 
-  // Footer
   const totalPages = (doc as any).internal.getNumberOfPages();
   for (let i = 1; i <= totalPages; i++) {
     doc.setPage(i);

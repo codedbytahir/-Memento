@@ -1,3 +1,7 @@
+/**
+ * Final page where users can view their generated biography PDF and take further actions.
+ * It provides options to download the PDF directly or have it sent to their registered email address.
+ */
 'use client';
 
 import React, { useEffect, useState } from 'react';

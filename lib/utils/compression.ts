@@ -1,3 +1,7 @@
+/**
+ * Utility functions for client-side image optimization and data conversion.
+ * It provides asynchronous methods for compressing images and converting file objects into base64 data strings.
+ */
 import imageCompression from 'browser-image-compression';
 
 export async function compressImage(file: File): Promise<File> {
@@ -12,7 +16,7 @@ export async function compressImage(file: File): Promise<File> {
     return compressedFile;
   } catch (error) {
     console.error('Error compressing image:', error);
-    return file; // Return original if compression fails
+    return file;
   }
 }
 
